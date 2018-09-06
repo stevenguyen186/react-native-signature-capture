@@ -19,6 +19,7 @@
 	BOOL _showBorder;
 	BOOL _showNativeButtons;
 	BOOL _showTitleLabel;
+    NSString *_viewMode;
 }
 
 @synthesize sign;
@@ -115,7 +116,9 @@
 			if (_showTitleLabel) {
 				titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.height - 80, 24)];
 				[titleLabel setCenter:CGPointMake(40, self.bounds.size.height/2)];
-				[titleLabel setTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(90))];
+                if(![_viewMode  isEqual: @"portrait"]) {
+                    [titleLabel setTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(90))];
+                }
 				[titleLabel setText:@"x_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"];
 				[titleLabel setLineBreakMode:NSLineBreakByClipping];
 				[titleLabel setTextAlignment: NSTextAlignmentLeft];
@@ -127,7 +130,9 @@
 			if (_showNativeButtons) {
 				//Save button
 				saveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-				[saveButton setTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(90))];
+                if(![_viewMode  isEqual: @"portrait"]) {
+                    [saveButton setTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(90))];
+                }
 				[saveButton setLineBreakMode:NSLineBreakByClipping];
 				[saveButton addTarget:self action:@selector(onSaveButtonPressed)
 				            forControlEvents:UIControlEventTouchUpInside];
@@ -141,7 +146,9 @@
 
 				//Clear button
 				clearButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-				[clearButton setTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(90))];
+                if(![_viewMode  isEqual: @"portrait"]) {
+                    [clearButton setTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(90))];
+                }
 				[clearButton setLineBreakMode:NSLineBreakByClipping];
 				[clearButton addTarget:self action:@selector(onClearButtonPressed)
 				             forControlEvents:UIControlEventTouchUpInside];
@@ -224,6 +231,10 @@
 
 -(void) erase {
 	[self.sign erase];
+}
+
+-(void)setViewMode:(NSString *)viewMode {
+    _viewMode = viewMode;
 }
 
 @end
